@@ -31,7 +31,7 @@ public class Conexao {
     }
 
     // Método para fechar a conexão
-    public static void close() {
+    public static void fechaConexao() {
         if (conexao != null) {
             try {
                 if (!conexao.isClosed()) {

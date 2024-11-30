@@ -14,14 +14,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Adilson Hernany
  */
-public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
+public final class Tela_Relatorio extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabela;
 
     /**
      * Creates new form FormCadastro
      */
-    public Tela_UsuariosCadastrados() {
+    public Tela_Relatorio() {
         initComponents();
 
         modeloTabela = (DefaultTableModel) tabela.getModel();
@@ -40,7 +40,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         tabela.getColumnModel().getColumn(3).setPreferredWidth(150); // Coluna morada
         tabela.getColumnModel().getColumn(4).setPreferredWidth(130); // Coluna senha
         tabela.getColumnModel().getColumn(5).setPreferredWidth(150); // Coluna data-criacao
-
+        tabela.getColumnModel().getColumn(6).setPreferredWidth(150); // Coluna data-modifacacao
     }
 
     /**
@@ -55,7 +55,6 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -63,11 +62,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnFechar = new javax.swing.JButton();
         btnRefreshDados = new javax.swing.JButton();
-        btnActualizarDados = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        txtPesquisa = new javax.swing.JTextField();
-        btnPesquisar = new javax.swing.JButton();
-        btnRelatorio = new javax.swing.JButton();
 
         btnLogin.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(0, 0, 153));
@@ -80,7 +75,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Mostrar Cadastrados");
+        setTitle("Mostrar Relatório");
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
@@ -88,19 +83,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 153));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Usuários cadastrados");
-
-        jButton2.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 153));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/excluir.png"))); // NOI18N
-        jButton2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jButton2.setMaximumSize(new java.awt.Dimension(34, 34));
-        jButton2.setPreferredSize(new java.awt.Dimension(34, 34));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Relatório");
 
         tabela.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tabela.setForeground(new java.awt.Color(0, 0, 153));
@@ -109,11 +92,11 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NOME", "EMAIL", "MORADA", "SENHA", "DATA-CRIAÇÃO"
+                "ID", "NOME", "EMAIL", "MORADA", "SENHA", "DATA-CRIAÇÃO", "DATA-MODIFCAÇÃO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,19 +156,6 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
             .addComponent(btnRefreshDados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
         );
 
-        btnActualizarDados.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
-        btnActualizarDados.setForeground(new java.awt.Color(0, 0, 153));
-        btnActualizarDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/refresh.png"))); // NOI18N
-        btnActualizarDados.setText("Actualizar");
-        btnActualizarDados.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnActualizarDados.setMaximumSize(new java.awt.Dimension(34, 34));
-        btnActualizarDados.setPreferredSize(new java.awt.Dimension(34, 34));
-        btnActualizarDados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarDadosActionPerformed(evt);
-            }
-        });
-
         btnVoltar.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         btnVoltar.setForeground(new java.awt.Color(0, 0, 153));
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/seta-esquerda.png"))); // NOI18N
@@ -194,29 +164,6 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
-            }
-        });
-
-        btnPesquisar.setFont(new java.awt.Font("Arial Narrow", 0, 36)); // NOI18N
-        btnPesquisar.setForeground(new java.awt.Color(0, 0, 153));
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/lupa__de_pesquisa.png"))); // NOI18N
-        btnPesquisar.setBorder(null);
-        btnPesquisar.setBorderPainted(false);
-        btnPesquisar.setMaximumSize(new java.awt.Dimension(50, 50));
-        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarActionPerformed(evt);
-            }
-        });
-
-        btnRelatorio.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
-        btnRelatorio.setForeground(new java.awt.Color(0, 0, 153));
-        btnRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/relatorio-de-lucro.png"))); // NOI18N
-        btnRelatorio.setText("Relatório");
-        btnRelatorio.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatorioActionPerformed(evt);
             }
         });
 
@@ -235,24 +182,9 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(554, 554, 554)
-                        .addComponent(btnActualizarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -261,25 +193,14 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPesquisa)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnActualizarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(75, 75, 75)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -315,27 +236,10 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefreshDadosActionPerformed
 
-    private void btnActualizarDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDadosActionPerformed
-        mostrarDadosCampos();
-    }//GEN-LAST:event_btnActualizarDadosActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ApagarDados();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
-        new Tela_CadastrarUsuario().setVisible(true);
+        new Tela_UsuariosCadastrados().setVisible(true);
     }//GEN-LAST:event_btnVoltarActionPerformed
-
-    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        buscarUsuario();
-    }//GEN-LAST:event_btnPesquisarActionPerformed
-
-    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
-        this.dispose();
-        new Tela_Relatorio().setVisible(true);
-    }//GEN-LAST:event_btnRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,31 +258,27 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela_UsuariosCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela_UsuariosCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela_UsuariosCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_UsuariosCadastrados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         /* Create and display the form */
         System.out.println(new ControleUsuario().getClass());
-
+        new Tela_Relatorio().setVisible(true);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarDados;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRefreshDados;
-    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -386,13 +286,12 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tabela;
-    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 
     //
     public void listarU() throws SQLException {
         ControleUsuario controle = new ControleUsuario();
-        ArrayList<Usuario> lista = controle.VerUsuarios();
+        ArrayList<Usuario> lista = controle.verUsuariosModificados();
 
         modeloTabela.setRowCount(0);
 
@@ -404,97 +303,12 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                     usu.getEmail(),
                     usu.getMorada(),
                     usu.getSenha(),
-                    usu.getDataCadastro()
+                    usu.getDataCadastro(),
+                    usu.getDataActualizacao()
                 });
             }
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma informação encontrada", "NADA", JOptionPane.ABORT);
-        }
-    }
-
-    //
-    //
-    private void mostrarDadosCampos() {
-
-        int linhaSelecionada = tabela.getSelectedRow();
-        if (linhaSelecionada != -1) {
-
-            // Abrir a tela de atualização e passar os dados
-            int id = Integer.parseInt(tabela.getValueAt(linhaSelecionada, 0).toString());
-            String nome = tabela.getValueAt(linhaSelecionada, 1).toString();
-            String email = tabela.getValueAt(linhaSelecionada, 2).toString();
-            String morada = tabela.getValueAt(linhaSelecionada, 3).toString();
-            String senha = tabela.getValueAt(linhaSelecionada, 4).toString();
-
-            // chamar a tela para actualizar os dados do usuario e mostrar os valores nos campos 
-            new Tela_ActualizarDados(id, nome, email, morada, senha).setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.");
-        }
-    }
-
-    //
-    //
-    private void ApagarDados() {
-        int linhaSelecionada = tabela.getSelectedRow();
-        if (linhaSelecionada != -1) {
-            ControleUsuario c_user = new ControleUsuario();
-
-            // Capturar o ID do usuário da tabela
-            int id = Integer.parseInt(tabela.getValueAt(linhaSelecionada, 0).toString());
-
-            // Apagar o usuário pelo ID
-            if (c_user.apagarUsuarioPeloId(id)) {
-                // Remover a linha da tabela apenas se a exclusão no banco de dados for bem-sucedida
-                modeloTabela.removeRow(linhaSelecionada);
-                JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir o usuário.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.");
-        }
-
-    }
-
-    //
-    //
-    private void buscarUsuario() {
-        // Capturar o nome do campo de texto
-        String nome = txtPesquisa.getText();
-
-        // Criar uma instância do controle e buscar usuários
-        ControleUsuario controle = new ControleUsuario();
-        ArrayList<Usuario> listaUsuarios = controle.buscarUsuarioPeloNome(nome);
-
-        // Limpar a tabela antes de preencher
-        modeloTabela.setRowCount(0);
-
-        // Exibir mensagem se nenhum usuário for encontrado
-        if (listaUsuarios.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado.");
-            modeloTabela.setRowCount(0);
-        } else {
-            // Preencher a tabela com os resultados
-            for (Usuario usuario : listaUsuarios) {
-                Object[] linha = {
-                    usuario.getId_usuario(),
-                    usuario.getNome(),
-                    usuario.getEmail(),
-                    usuario.getMorada(),
-                    usuario.getSenha(),
-                    usuario.getDataCadastro()
-
-                };
-
-                modeloTabela.addRow(linha);
-            }
-        }
-
-        if (nome.isEmpty()) {
-            modeloTabela.setRowCount(0);
-            JOptionPane.showMessageDialog(this, "Pesquisa inválida\nFaça uma busca.", "Inválido", JOptionPane.ERROR_MESSAGE);
         }
     }
 

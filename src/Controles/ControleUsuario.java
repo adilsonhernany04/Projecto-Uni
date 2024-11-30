@@ -5,8 +5,10 @@ import conectar.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.Date;
 
 /**
  *
@@ -16,6 +18,7 @@ public class ControleUsuario {
 
     PreparedStatement pdec = null;
     ResultSet rs = null;
+    
     ArrayList<Usuario> verLista = new ArrayList<>();
 
     @SuppressWarnings("ConvertToTryWithResources")
@@ -23,18 +26,17 @@ public class ControleUsuario {
     // METPODO PARA CADASTRAR
     public boolean cadastrarUsuario(Usuario usuario) {
 
-        String cmdS = "INSERT INTO estudante VALUES (?, ?, ?, ? , ?)";
+        String cmdS = "INSERT INTO estudante ( nome, email, senha, endereco) VALUES (?, ?, ? , ? )";
 
         try {
             pdec = Conexao.pegarConexao().prepareStatement(cmdS);
 
             // Definir os valores dos parâmetros na instrução SQL
-            pdec.setString(1, null); // id do estudante
-            pdec.setString(2, usuario.getNome()); // nome do estudante
-            pdec.setString(3, usuario.getEmail()); // email do estudante
-            pdec.setString(4, usuario.getSenha()); // endereco do estudante
-            pdec.setString(5, usuario.getMorada()); // senha do estudante
-
+            pdec.setString(1, usuario.getNome()); // nome do estudante
+            pdec.setString(2, usuario.getEmail()); // email do estudante
+            pdec.setString(3, usuario.getSenha()); // endereco do estudante
+            pdec.setString(4, usuario.getMorada()); // senha do estudante
+            
             pdec.execute();
             pdec.close();
 
@@ -48,10 +50,9 @@ public class ControleUsuario {
 
     //
     //
-    // METODO PARA LISTAR/MOSTRARs OS CADASTRADOS
-    public ArrayList<Usuario> VerUsuarios() {
-
-        String cmdS = "SELECT id, nome, email, endereco, senha FROM estudante";
+    // METODO PARA LISTAR/MOSTRAR OS CADASTRADOS MODIFICADOS
+    public ArrayList<Usuario> verUsuariosModificados() {
+        String cmdS = "SELECT * FROM estudante";
 
         try {
             pdec = (PreparedStatement) Conexao.pegarConexao().prepareStatement(cmdS);
@@ -65,6 +66,37 @@ public class ControleUsuario {
                 us.setEmail(rs.getString("email"));
                 us.setMorada(rs.getString("endereco"));
                 us.setSenha(rs.getString("senha"));
+                us.setDataCadastro(rs.getTimestamp(("dataCadastro")));
+                us.setDataActualizacao(rs.getTimestamp(("dataActualizacao")));
+
+                verLista.add(us);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return verLista;
+    } 
+    
+    // METODO PARA LISTAR/MOSTRARs OS CADASTRADOS
+    public ArrayList<Usuario> VerUsuarios() {
+
+        String cmdS = "SELECT id, nome, email, endereco, senha, dataCadastro FROM estudante";
+
+        try {
+            pdec = (PreparedStatement) Conexao.pegarConexao().prepareStatement(cmdS);
+            rs = pdec.executeQuery();
+
+            while (rs.next()) {
+
+                Usuario us = new Usuario();
+                us.setId_usuario(rs.getInt("id"));
+                us.setNome(rs.getString("nome"));
+                us.setEmail(rs.getString("email"));
+                us.setMorada(rs.getString("endereco"));
+                us.setSenha(rs.getString("senha"));
+                us.setDataCadastro(rs.getTimestamp(("dataCadastro")));
 
                 verLista.add(us);
             }
@@ -81,24 +113,23 @@ public class ControleUsuario {
     // METODO PARA ACTUALIZAR OS DADOS DE USUARIOS CADASTRADOS
     public boolean actualizarDados(Usuario usuario) {
 
-        String cmdS = "UPDATE estudante SET nome = ?, email = ?,senha = ?, endereco = ? "
+        String cmdS = "UPDATE estudante SET nome = ?, email = ?,senha = ?, endereco = ?, dataActualizacao = ? "
                 + "WHERE id = ?";
-
-        PreparedStatement pdec = null;
-
+        
         try {
             pdec = Conexao.pegarConexao().prepareStatement(cmdS);
-
+                        
             // Definir os valores dos parâmetros na instrução SQL
             pdec.setString(1, usuario.getNome()); // nome do estudante
             pdec.setString(2, usuario.getEmail()); // email do estudante
             pdec.setString(3, usuario.getSenha()); // endereco do estudante
             pdec.setString(4, usuario.getMorada()); // senha do estudante
-
+            pdec.setTimestamp(5, new java.sql.Timestamp(new Date().getTime())); // data-actualizada apos registro ser actualizado
+            
             // o id para seleccionar 
-            pdec.setInt(5, usuario.getId_usuario()); // id do estudante
-
-            pdec.execute();
+            pdec.setInt(6, usuario.getId_usuario()); // id do estudante
+            
+            pdec.executeUpdate();
             pdec.close();
 
             return true;
@@ -142,15 +173,16 @@ public class ControleUsuario {
     public ArrayList<Usuario> buscarUsuarioPeloNome(String nome) {
         
         String cmdS = "SELECT * FROM estudante WHERE nome LIKE ?"; // Consulta com LIKE para busca parcial
-        PreparedStatement pdec = null;
         
-
         try {
             pdec = Conexao.pegarConexao().prepareStatement(cmdS);
 
             // Definir o parâmetro com "%" para buscar por nomes semelhantes
             // 
-            pdec.setString(1, nome + "%"); // pega usuario pela inicial
+            // pdec.setString(1, nome + "%"); // pega usuario pela inicial
+            
+            // pegar pelo nome semelhante 
+            pdec.setString(1, "%" + nome + "%");
 
             ResultSet rs = pdec.executeQuery();
 
@@ -162,6 +194,7 @@ public class ControleUsuario {
                 usuario.setEmail(rs.getString("email"));
                 usuario.setMorada(rs.getString("endereco"));
                 usuario.setSenha(rs.getString("senha"));
+                usuario.setDataCadastro(rs.getTimestamp("dataCadastro"));
 
                 verLista.add(usuario);
             }
