@@ -1,6 +1,8 @@
 
 package Classes;
 
+import java.util.Date;
+
 /**
  *
  * @author Adilson Hernany
@@ -10,7 +12,9 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String endereco;
+    private String morada;
+    private Date dataCadastro;
+    private Date dataActualizacao;
 
     
     public int getId_usuario() {
@@ -45,16 +49,31 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getMorada() {
+        return morada;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setMorada(String morada) {
+        this.morada = morada;
     }
-    
-    
 
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public Date getDataActualizacao() {
+        return dataActualizacao;
+    }
+
+    public void setDataActualizacao(Date dataActualizacao) {
+        this.dataActualizacao = dataActualizacao;
+    }
+
+    
     
     
     
