@@ -272,7 +272,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(75, 75, 75)
@@ -316,7 +316,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshDadosActionPerformed
 
     private void btnActualizarDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDadosActionPerformed
-        mostrarDadosCampos();
+        mostrarDadosParaActualizar();
     }//GEN-LAST:event_btnActualizarDadosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -414,7 +414,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
 
     //
     //
-    private void mostrarDadosCampos() {
+    private void mostrarDadosParaActualizar() {
 
         int linhaSelecionada = tabela.getSelectedRow();
         if (linhaSelecionada != -1) {
@@ -430,7 +430,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
             new Tela_ActualizarDados(id, nome, email, morada, senha).setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.");
+            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.","", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -453,7 +453,7 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao excluir o usuário.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.");
+            JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha.","", JOptionPane.WARNING_MESSAGE);
         }
 
     }
@@ -471,10 +471,17 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
         // Limpar a tabela antes de preencher
         modeloTabela.setRowCount(0);
 
+        if (nome.isEmpty()) {
+            modeloTabela.setRowCount(0);
+            JOptionPane.showMessageDialog(this, "Pesquisa inválida! Campo vazio.", "Inválido", JOptionPane.ERROR_MESSAGE);
+            txtPesquisa.requestFocus();
+        }
+        
         // Exibir mensagem se nenhum usuário for encontrado
-        if (listaUsuarios.isEmpty()) {
+        else if (listaUsuarios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado.");
             modeloTabela.setRowCount(0);
+            txtPesquisa.requestFocus();
         } else {
             // Preencher a tabela com os resultados
             for (Usuario usuario : listaUsuarios) {
@@ -490,11 +497,6 @@ public final class Tela_UsuariosCadastrados extends javax.swing.JFrame {
 
                 modeloTabela.addRow(linha);
             }
-        }
-
-        if (nome.isEmpty()) {
-            modeloTabela.setRowCount(0);
-            JOptionPane.showMessageDialog(this, "Pesquisa inválida\nFaça uma busca.", "Inválido", JOptionPane.ERROR_MESSAGE);
         }
     }
 

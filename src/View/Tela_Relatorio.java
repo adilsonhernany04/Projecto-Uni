@@ -28,19 +28,17 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
 
         // mostrar os registros do bs
         try {
-            listarU();
+            listarRelatorio();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
+        /*
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(40); // Coluna id
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(150); // Coluna nome
-        tabela.getColumnModel().getColumn(2).setPreferredWidth(150); // Coluna email
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(150); // Coluna morada
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(130); // Coluna senha
-        tabela.getColumnModel().getColumn(5).setPreferredWidth(150); // Coluna data-criacao
-        tabela.getColumnModel().getColumn(6).setPreferredWidth(150); // Coluna data-modifacacao
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(150); // Coluna data-criacao
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(150); // Coluna data-modifacacao
+        */
     }
 
     /**
@@ -92,11 +90,11 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NOME", "EMAIL", "MORADA", "SENHA", "DATA-CRIAÇÃO", "DATA-MODIFCAÇÃO"
+                "ID", "DATA", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,9 +106,13 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
         tabela.setShowGrid(true);
         jScrollPane1.setViewportView(tabela);
         if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(45);
-            tabela.getColumnModel().getColumn(0).setMaxWidth(60);
-            tabela.getColumnModel().getColumn(4).setHeaderValue("SENHA");
+            tabela.getColumnModel().getColumn(0).setMinWidth(25);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tabela.getColumnModel().getColumn(0).setMaxWidth(50);
+            tabela.getColumnModel().getColumn(1).setResizable(false);
+            tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tabela.getColumnModel().getColumn(2).setResizable(false);
+            tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
         jLabel6.setFont(new java.awt.Font("Arial Narrow", 2, 13)); // NOI18N
@@ -182,10 +184,10 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,9 +197,9 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addGap(200, 200, 200)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +232,7 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
 
     private void btnRefreshDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshDadosActionPerformed
         try {
-            listarU();
+            listarRelatorio();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -289,22 +291,18 @@ public final class Tela_Relatorio extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //
-    public void listarU() throws SQLException {
+    public void listarRelatorio() throws SQLException {
         ControleUsuario controle = new ControleUsuario();
-        ArrayList<Usuario> lista = controle.verUsuariosModificados();
+        ArrayList<Usuario> lista = controle.verRelatorioUsuarios();
 
         modeloTabela.setRowCount(0);
 
         if (lista != null) {
             for (Usuario usu : lista) {
                 modeloTabela.addRow(new Object[]{
-                    usu.getId_usuario(),
-                    usu.getNome(),
-                    usu.getEmail(),
-                    usu.getMorada(),
-                    usu.getSenha(),
-                    usu.getDataCadastro(),
-                    usu.getDataActualizacao()
+                    usu.getId_historico(),
+                    usu.getData_accaoTrigger(),
+                    usu.getStatus_accao()
                 });
             }
         } else {

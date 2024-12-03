@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,8 +50,8 @@ public class ControleUsuario {
     //
     //
     // METODO PARA LISTAR/MOSTRAR OS CADASTRADOS MODIFICADOS
-    public ArrayList<Usuario> verUsuariosModificados() {
-        String cmdS = "SELECT * FROM estudante";
+    public ArrayList<Usuario> verRelatorioUsuarios() {
+        String cmdS = "SELECT id_historico, data_accao, accao FROM escola.historico_estudantes";
 
         try {
             pdec = (PreparedStatement) Conexao.pegarConexao().prepareStatement(cmdS);
@@ -61,13 +60,9 @@ public class ControleUsuario {
             while (rs.next()) {
 
                 Usuario us = new Usuario();
-                us.setId_usuario(rs.getInt("id"));
-                us.setNome(rs.getString("nome"));
-                us.setEmail(rs.getString("email"));
-                us.setMorada(rs.getString("endereco"));
-                us.setSenha(rs.getString("senha"));
-                us.setDataCadastro(rs.getTimestamp(("dataCadastro")));
-                us.setDataActualizacao(rs.getTimestamp(("dataActualizacao")));
+                us.setId_historico(rs.getInt(("id_historico")));
+                us.setData_accaoTrigger(rs.getTimestamp(("data_accao")));
+                us.setStatus_accao(rs.getString(("accao")));
 
                 verLista.add(us);
             }
@@ -113,7 +108,7 @@ public class ControleUsuario {
     // METODO PARA ACTUALIZAR OS DADOS DE USUARIOS CADASTRADOS
     public boolean actualizarDados(Usuario usuario) {
 
-        String cmdS = "UPDATE estudante SET nome = ?, email = ?,senha = ?, endereco = ?, dataActualizacao = ? "
+        String cmdS = "UPDATE escola.estudante SET nome = ?, email = ?,senha = ?, endereco = ?, dataActualizacao = ? "
                 + "WHERE id = ?";
         
         try {
@@ -146,8 +141,6 @@ public class ControleUsuario {
     // METODO PARA DELETAR USUARIO
     public boolean apagarUsuarioPeloId(int id) {
         String cmdS = "DELETE FROM estudante WHERE id = ? ";
-
-        PreparedStatement pdec = null;
 
         try {
             pdec = Conexao.pegarConexao().prepareStatement(cmdS);

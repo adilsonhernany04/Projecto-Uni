@@ -125,7 +125,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="276" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnActualizarDados" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                               <Component id="btnRelatorio" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>

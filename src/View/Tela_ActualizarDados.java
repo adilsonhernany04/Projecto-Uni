@@ -306,12 +306,13 @@ public final class Tela_ActualizarDados extends javax.swing.JFrame {
             us.setEmail(email);
             us.setSenha(senha);
             us.setMorada(morada);
+            //us.setDataActualizacao(rs.getDataActualizacao());
             
             us.setId_usuario(id);
 
             // Controle para verificar sucesso do cadastro
             ControleUsuario controle = new ControleUsuario();
-            boolean sucesso = controle.actualizarDados(us); // Supondo que o método retorna true se adicionou com sucesso
+            boolean sucesso = controle.actualizarDados(us); // Supondo que o método retorna true se actualizou com sucesso
 
             if (sucesso) {
                 // Limpa os campos após actualização bem-sucedida

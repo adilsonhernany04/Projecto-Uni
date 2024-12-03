@@ -15,6 +15,10 @@ public class Usuario {
     private String morada;
     private Date dataCadastro;
     private Date dataActualizacao;
+    
+    private int id_historico;
+    private Date data_accaoTrigger;
+    private String status_accao;
 
     
     public int getId_usuario() {
@@ -71,6 +75,32 @@ public class Usuario {
 
     public void setDataActualizacao(Date dataActualizacao) {
         this.dataActualizacao = dataActualizacao;
+    }
+
+    public int getId_historico() {
+        return id_historico;
+    }
+
+    public void setId_historico(int id_historico) {
+        this.id_historico = id_historico;
+    }
+
+    
+    
+    public Date getData_accaoTrigger() {
+        return data_accaoTrigger;
+    }
+
+    public void setData_accaoTrigger(Date data_accaoTrigger) {
+        this.data_accaoTrigger = data_accaoTrigger;
+    }
+
+    public String getStatus_accao() {
+        return status_accao;
+    }
+
+    public void setStatus_accao(String status_accao) {
+        this.status_accao = status_accao;
     }
 
     

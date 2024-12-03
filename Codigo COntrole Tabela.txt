@@ -1,0 +1,79 @@
+
+package Controles;
+
+import Classes.Usuario;
+import conectar.Conexao;
+import View.PesquisaUsuario;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import View.UsuarioView;
+
+/**
+ *
+ * @author Adilson Hernany
+ */
+public class ControleTabela {
+
+    private PesquisaUsuario p_user;
+    
+    public ControleTabela(PesquisaUsuario p_user){
+        this.p_user = p_user;
+    }
+
+    public ControleTabela() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void adicionarUsuario(Object[] dados) {
+        DefaultTableModel modelo_tabela = p_user.getModeloTabela();
+        modelo_tabela.addRow(dados);
+    }
+        
+    @SuppressWarnings("ConvertToTryWithResources")
+    public void cadastrarUsuario(Usuario usuario) {
+
+        String cmdS = "INSERT INTO estudante VALUES (?, ?, ?, ? , ?)";
+
+         
+        try {
+            PreparedStatement pdec = Conexao.getConnection().prepareStatement(cmdS);
+
+            // Definir os valores dos parâmetros na instrução SQL
+            pdec.setString(1, null); // nome do estudante
+            pdec.setString(2, usuario.getNome()); // nome do estudante
+            pdec.setString(3, usuario.getEmail()); // email do estudante
+            pdec.setString(4, usuario.getEndereco()); // senha do estudante
+            pdec.setString(5, usuario.getSenha()); // endereco do estudante
+            
+            pdec.execute();
+            pdec.close();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void buscarUsuario(String nome) {
+        String cmdS = "SELECT id, nome, email, endereco FROM estudante "
+                + "WHERE nome LIKE ?";
+     
+        
+        
+        try {
+            PreparedStatement pdec = Conexao.getConnection().prepareStatement(cmdS);
+            pdec.setString(1, "%" + nome + "%");
+            ResultSet rs = pdec.executeQuery();
+            
+            
+            
+        } catch (SQLException e) {
+        }
+        
+    }
+    
+    
+
+}
